@@ -1,0 +1,22 @@
+<div id="tabla">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Id</th>
+        <th scope="col">Valor del Servicio</th>
+        <th scope="col">Salario</th>
+        <th scope="col">Valor a Pagar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let copago of copagos; index as i ">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ copago.identificacionPaciente }} </td>
+        <td>{{ copago.valorServicio }}</td>
+        <td>{{copago.salarioTrabajador }}</td>
+        <td>{{ copago.valorCopago }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
