@@ -18,9 +18,10 @@ namespace Logica
 
         public GuardarCopagoResponse Guardar(Copago copago)
         {
+            if(ValidarRegistro(copago.IdentificacionPaciente)){        
             try
-            {
-                _conexión.Abrir();
+            {                                          
+                _conexión.Abrir();                
                 _repositorio.Guardar(copago);
                 _conexión.Cerrar();
                 return new GuardarCopagoResponse(copago);
@@ -29,9 +30,20 @@ namespace Logica
             {
                 return new GuardarCopagoResponse(e.Message);
             }
+            }
+            else return new GuardarCopagoResponse("Persona ya registrada");
         }
+        public bool ValidarRegistro(string idBuscar){
+            if (BuscarxId(idBuscar)!=null)
+            {  
+            return true;
+            } 
+            return false;
+        }
+
         public ConsultarCopagosResponse ConsultarCopagos()
-        {            
+        {
+            
             try
             {
                 _conexión.Abrir();
@@ -42,6 +54,36 @@ namespace Logica
             catch (Exception e)
             {
                 return new ConsultarCopagosResponse(e.Message);
+            }
+        }
+        public BuscarxIdResponse BuscarxId(string idBuscar)
+        {                   
+         try
+         {
+          _conexión.Abrir();
+          Copago copago = _repositorio.BuscarxId(idBuscar);
+          _conexión.Cerrar();   
+          return new BuscarxIdResponse(copago);
+         }
+         catch (Exception e)
+         {             
+            return new BuscarxIdResponse(e.Message);
+         }
+        }            
+        public class BuscarxIdResponse
+        {
+            public bool Error { get; set; }
+            public string Mensaje { get; set; }
+            public Copago Copago { get; set; }
+            public BuscarxIdResponse(Copago copago)
+            {
+                Error = false;
+                Copago = copago;
+            }
+            public BuscarxIdResponse(string mensaje)
+            {
+                Error = true;
+                Mensaje = mensaje;
             }
         }
         public class GuardarCopagoResponse
@@ -76,5 +118,6 @@ namespace Logica
                 Mensaje = mensaje;
             }
         }
+
     }
 }

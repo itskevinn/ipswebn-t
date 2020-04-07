@@ -22,6 +22,13 @@ values (@Id, @ValorServicio, @SalarioTrabajador, @ValorCopago)";
                 var filas = comando.ExecuteNonQuery ( );
             }
         }
+        public Copago BuscarxId(string idABuscar){
+List<Copago> copagos = ConsultarTodos();
+Copago copago = new Copago();
+copago = copagos.Find(c => c.IdentificacionPaciente == idABuscar);
+return copago;
+
+        }
 
         public List<Copago> ConsultarTodos ( ) {
             SqlDataReader lectorDeDatos;

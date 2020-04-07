@@ -14,7 +14,7 @@ namespace Entity {
                 else {
                     this.Tarifa = 0.1M;                    
                 }
-                return (this.Tarifa * this.ValorServicio) + this.ValorServicio;
+                return this.Tarifa * this.ValorServicio;
             }
         }
     }

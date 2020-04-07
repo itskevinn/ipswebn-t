@@ -30,7 +30,7 @@ namespace ipsweb.Controllers
         // GET: api/Copago
         [HttpGet]
         public IEnumerable<CopagoViewModel> Get()
-        {            
+        {
             var respuesta = _servicioDeCopago.ConsultarCopagos().Copagos.Select(p => new CopagoViewModel(p));
             return respuesta;
         }
@@ -53,9 +53,21 @@ namespace ipsweb.Controllers
             {
                 IdentificacionPaciente = copagoInput.IdentificacionPaciente,
                 ValorServicio = copagoInput.ValorServicio,
-                SalarioTrabajador = copagoInput.SalarioTrabajador,                
+                SalarioTrabajador = copagoInput.SalarioTrabajador,
             };
             return copago;
         }
+
+        [HttpGet("{identificacion}")]
+        public ActionResult<CopagoViewModel> Get(string identificacion)
+        {            
+            var respuesta = _servicioDeCopago.BuscarxId(identificacion);            
+            if (respuesta.Error)
+            {
+                return Ok(respuesta.Copago);
+            }
+            return BadRequest(respuesta.Mensaje);                     
+        }
     }
 }
+

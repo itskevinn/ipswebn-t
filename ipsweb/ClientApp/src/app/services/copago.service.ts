@@ -23,11 +23,18 @@ export class CopagoService {
         catchError(this.handleErrorService.handleError<Copago>('Registrar Copago', null)),
       )
   }
-  get(): Observable<Copago[]> {
+  gets(): Observable<Copago[]> {
     return this.http.get<Copago[]>(this.baseUrl + 'api/Copago')
       .pipe(
         tap(_ => this.handleErrorService.log('Datos traídos del BackEnd')),
         catchError(this.handleErrorService.handleError<Copago[]>('Consultar Copago', null)),
+      )
+  }
+  get(idABuscar: string): Observable<Copago> {
+    return this.http.get<Copago>(this.baseUrl + 'api/Copago')
+      .pipe(
+        tap(_ => this.handleErrorService.log('Datos traídos del BackEnd')),
+        catchError(this.handleErrorService.handleError<Copago>('Buscar por Id', null)),
       )
   }
 }

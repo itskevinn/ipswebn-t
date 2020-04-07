@@ -8,18 +8,32 @@ import { CopagoService } from '../../services/copago.service';
   styleUrls: ['./copago-registro.component.css']
 })
 export class CopagoRegistroComponent implements OnInit {
-copago : Copago;
-  constructor(private copagoService : CopagoService) { }
+  copago: Copago;
+  idABuscar: string;
+  constructor(private copagoService: CopagoService) { }
 
   ngOnInit(): void {
     this.copago = new Copago();
   }
-registrarCopago(){
-  this.copagoService.post(this.copago).subscribe(p=>{
-    if(p!=null){
-      alert("Copago registrado exitosamente!");
-      this.copago = p;
-    }
-  });
+  buscarCopago() {
+    this.copagoService.get(this.idABuscar).subscribe(resultado => {
+      this.copago = resultado;
+    })
+    return this.copago;
+  }
+  registrarCopago() {
+    this.copagoService.post(this.copago).subscribe(p => {
+      if (this.buscarCopago() == null) {
+
+        if (p != null) {
+          alert("Copago registrado exitosamente!");
+          this.copago = p;
+        }
+      }
+      else {
+        alert("Persona ya registrada");
+      }
+    });
+  }
 }
-}
+
