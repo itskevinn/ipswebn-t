@@ -34,7 +34,7 @@ namespace Logica
             else return new GuardarCopagoResponse("Persona ya registrada");
         }
         public bool ValidarRegistro(string idBuscar){
-            if (BuscarxId(idBuscar)!=null)
+            if (BuscarxId(idBuscar).Error)
             {  
             return true;
             } 
@@ -57,18 +57,15 @@ namespace Logica
             }
         }
         public BuscarxIdResponse BuscarxId(string idBuscar)
-        {                   
-         try
+        {           
+        var respuesta = ConsultarCopagos();
+         foreach (var copago in respuesta.Copagos)
          {
-          _conexión.Abrir();
-          Copago copago = _repositorio.BuscarxId(idBuscar);
-          _conexión.Cerrar();   
-          return new BuscarxIdResponse(copago);
+             if(copago.IdentificacionPaciente == idBuscar){
+                 return new BuscarxIdResponse(copago);
+            }             
          }
-         catch (Exception e)
-         {             
-            return new BuscarxIdResponse(e.Message);
-         }
+         return new BuscarxIdResponse("No se encontró");
         }            
         public class BuscarxIdResponse
         {

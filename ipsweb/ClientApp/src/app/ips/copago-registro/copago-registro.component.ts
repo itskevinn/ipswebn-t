@@ -15,25 +15,18 @@ export class CopagoRegistroComponent implements OnInit {
   ngOnInit(): void {
     this.copago = new Copago();
   }
-  buscarCopago() {
-    this.copagoService.get(this.idABuscar).subscribe(resultado => {
-      this.copago = resultado;
-    })
-    return this.copago;
-  }
-  registrarCopago() {
-    this.copagoService.post(this.copago).subscribe(p => {
-      if (this.buscarCopago() == null) {
-
+   
+  registrarCopago() {    
+    this.copagoService.post(this.copago).subscribe(p => {  
         if (p != null) {
           alert("Copago registrado exitosamente!");
           this.copago = p;
         }
-      }
-      else {
-        alert("Persona ya registrada");
-      }
-    });
+        else {
+          alert("Intenta duplicar");
+        }
+      })      
+    }
   }
-}
+
 

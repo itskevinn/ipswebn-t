@@ -1,16 +1,16 @@
 <form id="formulario">
     <div class="form-group">
         <label for="identidadPaciente">Identidad del paciente</label>
-        <input type="text" class="form-control" name="identificacionPaciente" [(ngModel)]="copago.identificacionPaciente" placeholder="Ingrese el número de identidad del paciente" >
+        <input type="text" class="form-control" name="identificacionPaciente" [(ngModel)]="copago.identificacionPaciente" placeholder="Ingrese el número de identidad del paciente" required>
     </div>
     <div class="row">
         <div class="col">
             <label for="valorServicio">Valor del servicio</label>
-            <input type="number" class="form-control" placeholder="Ingrese el valor del servicio" [(ngModel)]="copago.valorServicio" name="valorServicio" >
+            <input type="number" class="form-control" placeholder="Ingrese el valor del servicio" [(ngModel)]="copago.valorServicio" name="valorServicio" required>
         </div>
         <div class="col">
             <label for="salarioTrabajador">Salario del trabajador</label>
-            <input type="number" class="form-control" placeholder="Ingrese su salario" [(ngModel)]="copago.salarioTrabajador" name="salarioTrabajador" >
+            <input type="number" class="form-control" placeholder="Ingrese su salario" [(ngModel)]="copago.salarioTrabajador" name="salarioTrabajador" required>
         </div>
     </div>
     <br>

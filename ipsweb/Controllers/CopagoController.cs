@@ -64,9 +64,9 @@ namespace ipsweb.Controllers
             var respuesta = _servicioDeCopago.BuscarxId(identificacion);            
             if (respuesta.Error)
             {
-                return Ok(respuesta.Copago);
+                return BadRequest(respuesta.Mensaje);
             }
-            return BadRequest(respuesta.Mensaje);                     
+            return Ok(respuesta.Copago);                     
         }
     }
 }
