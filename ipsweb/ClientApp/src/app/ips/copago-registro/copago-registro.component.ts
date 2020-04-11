@@ -1,32 +1,51 @@
 import { Component, OnInit } from '@angular/core';
+import { CopagoService } from 'src/app/services/copago.service';
 import { Copago } from '../models/copago';
-import { CopagoService } from '../../services/copago.service';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-copago-registro',
-  templateUrl: './copago-registro.component.html',
-  styleUrls: ['./copago-registro.component.css']
+  selector: 'app-Copago-registro',
+  templateUrl: './Copago-registro.component.html',
+  styleUrls: ['./Copago-registro.component.css']
 })
 export class CopagoRegistroComponent implements OnInit {
+  formGroup: FormGroup;
   copago: Copago;
-  idABuscar: string;
-  constructor(private copagoService: CopagoService) { }
-
+  constructor(private copagoService: CopagoService, private formBuilder: FormBuilder) { }
   ngOnInit(): void {
     this.copago = new Copago();
+    this.buildForm();
   }
-   
-  registrarCopago() {    
-    this.copagoService.post(this.copago).subscribe(p => {  
-        if (p != null) {
-          alert("Copago registrado exitosamente!");
-          this.copago = p;
-        }
-        else {
-          alert("Intenta duplicar");
-        }
-      })      
+  private buildForm() {
+    this.copago = new Copago();
+    this.copago.identificacionPaciente = "";
+    this.copago.valorServicio = 0;
+    this.copago.salarioTrabajador = 0;
+
+    this.formGroup = this.formBuilder.group({
+      identificacionPaciente: [this.copago.identificacionPaciente, Validators.required],
+      valorServicio: [this.copago.valorServicio, [Validators.required, Validators.min(1)]],
+      salarioTrabajador: [this.copago.salarioTrabajador, [Validators.required, Validators.min(1)]],
+    });
+  }
+
+  onSubmit() {
+    if (this.formGroup.invalid) {
+      return;
     }
+    this.registrar();
   }
 
+  registrar() {
+    this.copago = this.formGroup.value;
+    this.copagoService.post(this.copago).subscribe(p => {
+      if (p != null) {
+        alert('Copago Registrado!');
+        this.copago = p;
+      }
+    });
+  }
+  get control() { return this.formGroup.controls; }
 
+
+}

@@ -1,20 +1,38 @@
-<form id="formulario">
+<div id="formulario">
+  <form [formGroup]="formGroup">
     <div class="form-group">
-        <label for="identidadPaciente">Identidad del paciente</label>
-        <input type="text" class="form-control" name="identificacionPaciente" [(ngModel)]="copago.identificacionPaciente" placeholder="Ingrese el número de identidad del paciente" required>
+      <label for="identificacionPaciente">Identidad del paciente</label>
+      <input type="text" class="form-control" name="identificacionPaciente" formControlName="identificacionPaciente"
+        placeholder="Ingrese el número de identidad del paciente"
+        [ngClass]="{ 'is-invalid': control.identificacionPaciente.errors}">
+    </div>
+    <div *ngIf="control.identificacionPaciente.errors" class="invalid-feedback">
+      <div *ngIf="control.identificacionPaciente.errors.required">Se require el número de identificación del paciente
+      </div>
     </div>
     <div class="row">
-        <div class="col">
-            <label for="valorServicio">Valor del servicio</label>
-            <input type="number" class="form-control" placeholder="Ingrese el valor del servicio" [(ngModel)]="copago.valorServicio" name="valorServicio" required>
-        </div>
-        <div class="col">
-            <label for="salarioTrabajador">Salario del trabajador</label>
-            <input type="number" class="form-control" placeholder="Ingrese su salario" [(ngModel)]="copago.salarioTrabajador" name="salarioTrabajador" required>
-        </div>
+      <div class="col">
+        <label for="valorServicio">Valor del servicio</label>
+        <input type="number" class="form-control" placeholder="Ingrese el valor del servicio"
+          formControlName="valorServicio" name=valorServicio [ngClass]="{ 'is-invalid': control.valorServicio.errors}">
+      </div>
+      <div *ngIf="control.valorServicio.errors" class="invalid-feedback">
+        <div *ngIf="control.valorServicio.errors.required">Se require el valor del servicio</div>
+      </div>
+      <div class="col">
+        <label for="salarioTrabajador">Salario del trabajador</label>
+        <input type="number" class="form-control" placeholder="Ingrese su salario" formControlName="salarioTrabajador"
+          [ngClass]="{ 'is-invalid': control.salarioTrabajador.errors}">
+      </div>
+      <div *ngIf="control.salarioTrabajador.errors" class="invalid-feedback">
+        <div *ngIf="control.salarioTrabajador.errors.required">Se require el salario del trabajador</div>
+      </div>
     </div>
     <br>
-    <div id="botón">
-        <button type="button" class="btn btn-warning" (click)="registrarCopago()" name="registrarBtn">Registrar Copago</button>
+    <div id="botones" class="text-center">
+      <button type="button" class="btn btn-warning" (click)="onSubmit()" [disabled]="formGroup.invalid">Registrar
+        Copago</button>
+      <button type="reset" class="btn btn-light">Cancelar</button>
     </div>
-</form>
+  </form>
+</div>

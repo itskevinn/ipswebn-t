@@ -1,4 +1,9 @@
 .formulario {
-    margin: auto;
-    align-items: center;
+  margin: auto;
+  width: 40%;
+  align-items: center;
+}
+
+.botones {
+  margin: 40px;
 }
